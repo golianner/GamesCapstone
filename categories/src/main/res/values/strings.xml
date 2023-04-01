@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_categories">Title Categories</string>
     <string name="categories_developers">Developers</string>
     <string name="categories_genres">Genres</string>
 </resources>

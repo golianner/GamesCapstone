@@ -25,9 +25,5 @@
     <string name="developers">Developers</string>
     <string name="genres">Genres</string>
 
-    <string name="find_games">Find Games</string>
-    <string name="games_count">Games Count</string>
-    <string name="image">Image</string>
-
     <string name="filter_identifier">Filter Identifier</string>
 </resources>

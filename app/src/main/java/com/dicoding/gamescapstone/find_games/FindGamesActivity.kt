@@ -1,5 +1,6 @@
 package com.dicoding.gamescapstone.find_games
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.dicoding.core.utils.DataHelper
 import com.dicoding.core.utils.FilterType
 import com.dicoding.core.utils.ui.GameAdapter
 import com.dicoding.gamescapstone.databinding.ActivityFindGamesBinding
+import com.dicoding.gamescapstone.detail_game.DetailGameActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +35,13 @@ class FindGamesActivity : AppCompatActivity() {
 
         val filterType = intent.getParcelableExtra<FilterType>(DataHelper.EXTRA_DATA)
         loadFilterGames(filterType)
+
+        gameAdapter.onItemClick = { selectedData ->
+            println(selectedData.name)
+            val intent = Intent(this@FindGamesActivity, DetailGameActivity::class.java)
+            intent.putExtra(DataHelper.EXTRA_DATA, selectedData)
+            startActivity(intent)
+        }
 
         viewModel.games.observe(this){ gameModel ->
             if (gameModel != null){
