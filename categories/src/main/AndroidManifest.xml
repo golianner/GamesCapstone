@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <dist:module
+        dist:instant="false">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application android:icon="@mipmap/ic_icon">
+        <activity android:name=".developers.DeveloperActivity"
+            android:theme="@style/Theme.GamesCapstone.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="games-capstone"
+                    android:host="categories-developers"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".genres.GenreActivity"
+            android:theme="@style/Theme.GamesCapstone.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="games-capstone"
+                    android:host="categories-genres"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

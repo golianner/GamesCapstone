@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Games Capstone</string>
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="favorite">Favorite</string>
+    <string name="search_games">Search for games</string>
+    <string name="screenshots">Screenshots</string>
+
+    <string name="something_wrong">Oops.. something went wrong</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="ss_image">Screenshots Image</string>
+
+    <string name="sample_genres">Sample of genres</string>
+    <string name="sample_release">Sample of released date</string>
+    <string name="add_favorite">Game successfully added to favorite</string>
+    <string name="remove_favorite">Game has been removed from favorite</string>
+    <string name="add_favorite_developer">Developer successfully added to favorite</string>
+    <string name="remove_favorite_developer">Developer has been removed from favorite</string>
+    <string name="add_favorite_genre">Genre successfully added to favorite</string>
+    <string name="remove_favorite_genre">Genre has been removed from favorite</string>
+
+    <string name="games">Games</string>
+    <string name="developers">Developers</string>
+    <string name="genres">Genres</string>
+
+    <string name="find_games">Find Games</string>
+    <string name="games_count">Games Count</string>
+    <string name="image">Image</string>
+
+    <string name="filter_identifier">Filter Identifier</string>
+</resources>
