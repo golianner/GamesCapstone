@@ -16,6 +16,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "BASE_URL", "\"https://api.rawg.io/api/\""
+        buildConfigField "String", "API_KEY", "\"?key=f26fd0218f6d4980aa684375a75bf11e\""
+        buildConfigField "String", "DB_NAME", "\"Game.db\""
+        buildConfigField "String", "DB_PASSPHRASE", "\"golianner\""
+        buildConfigField "String", "HOSTNAME", "\"api.rawg.io\""
+        buildConfigField "String", "CERTIFICATE_PINNING_1", "\"sha256/Vt5/77IBRU8Ic76wffoVpn2hrTRotDK+cuASoGoEzS0=\""
+        buildConfigField "String", "CERTIFICATE_PINNING_2", "\"sha256/hS5jJ4P+iQUErBkvoWBQOd1T7VOAYlOVegvv1iMzpxA=\""
+        buildConfigField "String", "CERTIFICATE_PINNING_3", "\"sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=\""
     }
 
     buildTypes {

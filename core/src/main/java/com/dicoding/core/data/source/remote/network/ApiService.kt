@@ -1,5 +1,6 @@
 package com.dicoding.core.data.source.remote.network
 
+import com.dicoding.core.BuildConfig
 import com.dicoding.core.data.source.remote.response.developer.ListDeveloperResponse
 import com.dicoding.core.data.source.remote.response.game.ListGameResponse
 import com.dicoding.core.data.source.remote.response.genre.ListGenreResponse
@@ -28,7 +29,7 @@ interface ApiService {
     suspend fun getGamesFilterGenre(@Query("genres") slug: String): ListGameResponse
 
     companion object {
-        private const val API_KEY = "?key=f26fd0218f6d4980aa684375a75bf11e"
-        const val BASE_URL = "https://api.rawg.io/api/"
+        private const val API_KEY = BuildConfig.API_KEY
+        const val BASE_URL = BuildConfig.BASE_URL
     }
 }

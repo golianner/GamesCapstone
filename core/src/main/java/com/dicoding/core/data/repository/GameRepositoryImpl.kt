@@ -8,14 +8,15 @@ import com.dicoding.core.data.source.remote.network.ApiResponse
 import com.dicoding.core.data.source.remote.response.game.GameResponse
 import com.dicoding.core.domain.model.game.GameModel
 import com.dicoding.core.domain.repository.GameRepository
-import com.dicoding.core.utils.AppExecutors
 import com.dicoding.core.utils.FilterType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class GameRepositoryImpl(
     private val remoteDataSource: RemoteGameSource,
-    private val localDataSource: LocalGameSource,
-    private val appExecutors: AppExecutors
+    private val localDataSource: LocalGameSource
 ): GameRepository {
     override fun getAll(refresh: Boolean): Flow<Resource<List<GameModel>>> =
         object : NetworkBoundResource<List<GameModel>, List<GameResponse>>() {
@@ -77,7 +78,7 @@ class GameRepositoryImpl(
 
     override fun setFavorite(model: GameModel, state: Boolean) {
         val gameEntity = model.toEntity()
-        appExecutors.diskIO().execute {
+        CoroutineScope(Dispatchers.IO).launch {
             localDataSource.setFavorite(gameEntity, state)
         }
     }

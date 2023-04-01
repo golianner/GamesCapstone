@@ -8,14 +8,15 @@ import com.dicoding.core.data.source.remote.network.ApiResponse
 import com.dicoding.core.data.source.remote.response.genre.GenresResponse
 import com.dicoding.core.domain.model.genre.GenresModel
 import com.dicoding.core.domain.repository.GenreRepository
-import com.dicoding.core.utils.AppExecutors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class GenreRepositoryImpl(
     private val localDataSource: LocalGenreSource,
-    private val remoteDataSource: RemoteGenreSource,
-    private val appExecutors: AppExecutors
+    private val remoteDataSource: RemoteGenreSource
 ): GenreRepository {
     override fun getAll(refresh: Boolean): Flow<Resource<List<GenresModel>>> =
         object : NetworkBoundResource<List<GenresModel>, List<GenresResponse>>() {
@@ -59,7 +60,7 @@ class GenreRepositoryImpl(
 
     override fun setFavorite(genresModel: GenresModel, state: Boolean) {
         val genreEntity = genresModel.toEntity()
-        appExecutors.diskIO().execute {
+        CoroutineScope(Dispatchers.IO).launch {
             localDataSource.setFavorite(genreEntity, state)
         }
     }

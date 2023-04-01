@@ -8,14 +8,15 @@ import com.dicoding.core.data.source.remote.network.ApiResponse
 import com.dicoding.core.data.source.remote.response.developer.DeveloperResponse
 import com.dicoding.core.domain.model.developer.DeveloperModel
 import com.dicoding.core.domain.repository.DeveloperRepository
-import com.dicoding.core.utils.AppExecutors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class DeveloperRepositoryImpl(
     private val localDataSource: LocalDeveloperSource,
-    private val remoteDataSource: RemoteDeveloperSource,
-    private val appExecutors: AppExecutors
+    private val remoteDataSource: RemoteDeveloperSource
 ): DeveloperRepository {
     override fun getAll(refresh: Boolean): Flow<Resource<List<DeveloperModel>>> =
         object : NetworkBoundResource<List<DeveloperModel>, List<DeveloperResponse>>() {
@@ -59,7 +60,7 @@ class DeveloperRepositoryImpl(
 
     override fun setFavorite(developerModel: DeveloperModel, state: Boolean) {
         val developerEntity = developerModel.toEntity()
-        appExecutors.diskIO().execute {
+        CoroutineScope(Dispatchers.IO).launch {
             localDataSource.setFavorite(developerEntity, state)
         }
     }

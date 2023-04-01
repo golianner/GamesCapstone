@@ -1,6 +1,7 @@
 package com.dicoding.core.di
 
 import androidx.room.Room
+import com.dicoding.core.BuildConfig
 import com.dicoding.core.data.repository.DeveloperRepositoryImpl
 import com.dicoding.core.data.repository.GameRepositoryImpl
 import com.dicoding.core.data.repository.GenreRepositoryImpl
@@ -15,7 +16,6 @@ import com.dicoding.core.data.source.remote.network.ApiService
 import com.dicoding.core.domain.repository.DeveloperRepository
 import com.dicoding.core.domain.repository.GameRepository
 import com.dicoding.core.domain.repository.GenreRepository
-import com.dicoding.core.utils.AppExecutors
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 import okhttp3.CertificatePinner
@@ -27,11 +27,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val hostname = "api.rawg.io"
-val certificatePinner = CertificatePinner.Builder()
-    .add(hostname, "sha256/Vt5/77IBRU8Ic76wffoVpn2hrTRotDK+cuASoGoEzS0=")
-    .add(hostname, "sha256/hS5jJ4P+iQUErBkvoWBQOd1T7VOAYlOVegvv1iMzpxA=")
-    .add(hostname, "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=")
+const val hostname = BuildConfig.HOSTNAME
+val certification = CertificatePinner.Builder()
+    .add(hostname, BuildConfig.CERTIFICATE_PINNING_1)
+    .add(hostname, BuildConfig.CERTIFICATE_PINNING_2)
+    .add(hostname, BuildConfig.CERTIFICATE_PINNING_3)
     .build()
 
 val listCoreModule = listOf(
@@ -41,11 +41,11 @@ val listCoreModule = listOf(
         factory { get<GameDatabase>().developerDAO() }
         factory { get<GameDatabase>().genreDAO() }
         single {
-            val passphrase: ByteArray = SQLiteDatabase.getBytes("golianner".toCharArray())
+            val passphrase: ByteArray = SQLiteDatabase.getBytes(BuildConfig.DB_PASSPHRASE.toCharArray())
             val factory = SupportFactory(passphrase)
             Room.databaseBuilder(
                 androidContext(),
-                GameDatabase::class.java, "Game.db"
+                GameDatabase::class.java, BuildConfig.DB_NAME
             ).fallbackToDestructiveMigration()
                 .openHelperFactory(factory)
                 .build()
@@ -55,7 +55,7 @@ val listCoreModule = listOf(
     module {
         single {
             OkHttpClient.Builder()
-                .certificatePinner(certificatePinner)
+                .certificatePinner(certification)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
@@ -78,10 +78,8 @@ val listCoreModule = listOf(
         single { RemoteGameSource(get()) }
         single { RemoteDeveloperSource(get()) }
         single { RemoteGenreSource(get()) }
-        factory { AppExecutors() }
         single<GameRepository> {
             GameRepositoryImpl(
-                get(),
                 get(),
                 get()
             )
@@ -89,13 +87,11 @@ val listCoreModule = listOf(
         single<DeveloperRepository> {
             DeveloperRepositoryImpl(
                 get(),
-                get(),
                 get()
             )
         }
         single<GenreRepository> {
             GenreRepositoryImpl(
-                get(),
                 get(),
                 get()
             )
