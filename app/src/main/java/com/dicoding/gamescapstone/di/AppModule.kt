@@ -1,11 +1,14 @@
 package com.dicoding.gamescapstone.di
 
+import com.dicoding.core.domain.usecase.axa_test.AxaTestInteractor
+import com.dicoding.core.domain.usecase.axa_test.AxaTestUseCase
 import com.dicoding.core.domain.usecase.developer.DeveloperInteractor
 import com.dicoding.core.domain.usecase.developer.DeveloperUseCase
 import com.dicoding.core.domain.usecase.game.GameInteractor
 import com.dicoding.core.domain.usecase.game.GameUseCase
 import com.dicoding.core.domain.usecase.genre.GenreInteractor
 import com.dicoding.core.domain.usecase.genre.GenreUseCase
+import com.dicoding.gamescapstone.axa_test.PostViewModel
 import com.dicoding.gamescapstone.detail_game.DetailGameViewModel
 import com.dicoding.gamescapstone.home.HomeViewModel
 import com.dicoding.gamescapstone.find_games.FindGamesViewModel
@@ -21,11 +24,13 @@ val listAppModule = listOf(
         factory<GameUseCase> { GameInteractor(get()) }
         factory<DeveloperUseCase> { DeveloperInteractor(get()) }
         factory<GenreUseCase> { GenreInteractor(get()) }
+        factory<AxaTestUseCase> { AxaTestInteractor(get()) }
     },
     // View Model Module
     module {
         viewModel { HomeViewModel(get()) }
         viewModel { DetailGameViewModel(get()) }
         viewModel { FindGamesViewModel(get()) }
+        viewModel { PostViewModel(get()) }
     }
 )

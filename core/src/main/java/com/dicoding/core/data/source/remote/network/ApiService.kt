@@ -1,6 +1,7 @@
 package com.dicoding.core.data.source.remote.network
 
 import com.dicoding.core.BuildConfig
+import com.dicoding.core.data.source.remote.response.axa_test.AxaTestResponse
 import com.dicoding.core.data.source.remote.response.developer.ListDeveloperResponse
 import com.dicoding.core.data.source.remote.response.game.ListGameResponse
 import com.dicoding.core.data.source.remote.response.genre.ListGenreResponse
